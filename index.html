@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Junrel Dagohoy | Senior Backend Developer</title>
+  <meta
+    name="description"
+    content="Portfolio of Junrel Dagohoy, a Senior Backend Developer specializing in .NET, C#, APIs, Azure, AWS, FHIR, and banking systems."
+  >
+  <meta name="theme-color" content="#08111f">
+
+  <style>
+    :root {
+      --background: #08111f;
+      --background-light: #0d192b;
+      --surface: rgba(18, 34, 56, 0.78);
+      --surface-solid: #122238;
+      --text: #f4f8ff;
+      --muted: #aab9cf;
+      --primary: #56d6c9;
+      --primary-dark: #103b3b;
+      --secondary: #7ea7ff;
+      --border: rgba(255, 255, 255, 0.1);
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+      --container: 1120px;
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 15%, rgba(86, 214, 201, 0.12), transparent 28rem),
+        radial-gradient(circle at 90% 10%, rgba(126, 167, 255, 0.12), transparent 30rem),
+        var(--background);
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .container {
+      width: min(calc(100% - 2rem), var(--container));
+      margin-inline: auto;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: -100px;
+      left: 1rem;
+      z-index: 1000;
+      padding: 0.75rem 1rem;
+      color: #041514;
+      background: var(--primary);
+      border-radius: 8px;
+      font-weight: 800;
+    }
+
+    .skip-link:focus {
+      top: 1rem;
+    }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 100;
+      border-bottom: 1px solid transparent;
+      transition: background 180ms ease, border-color 180ms ease;
+    }
+
+    .site-header.scrolled {
+      background: rgba(8, 17, 31, 0.9);
+      border-color: var(--border);
+      backdrop-filter: blur(16px);
+    }
+
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1rem;
+      font-weight: 850;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      color: #051918;
+      background: linear-gradient(135deg, var(--primary), #adfff6);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(86, 214, 201, 0.2);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: color 160ms ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--primary);
+    }
+
+    .menu-button {
+      display: none;
+      padding: 0.6rem;
+      color: var(--text);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .menu-button span {
+      display: block;
+      width: 23px;
+      height: 2px;
+      margin: 4px 0;
+      background: currentColor;
+    }
+
+    main {
+      overflow: hidden;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      padding: 9rem 0 5rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+      color: var(--primary);
+      font-size: 0.82rem;
+      font-weight: 850;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 30px;
+      height: 2px;
+      background: currentColor;
+      content: "";
+    }
+
+    h1 {
+      max-width: 820px;
+      font-size: clamp(3rem, 8vw, 6.2rem);
+      line-height: 0.98;
+      letter-spacing: -0.065em;
+    }
+
+    .gradient-text {
+      display: block;
+      color: transparent;
+      background: linear-gradient(100deg, var(--primary), var(--secondary));
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero-description {
+      max-width: 720px;
+      margin: 1.75rem 0 2rem;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.22rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 0.8rem 1.25rem;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease,
+        background 160ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: #031615;
+      background: var(--primary);
+      box-shadow: 0 10px 30px rgba(86, 214, 201, 0.2);
+    }
+
+    .button-secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.03);
+      border-color: var(--border);
+    }
+
+    .hero-panel {
+      position: relative;
+      padding: 1.5rem;
+      background: linear-gradient(145deg, rgba(18, 34, 56, 0.94), rgba(10, 22, 39, 0.8));
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-panel::before {
+      position: absolute;
+      inset: -1px;
+      z-index: -1;
+      background: linear-gradient(135deg, rgba(86, 214, 201, 0.4), transparent 45%);
+      border-radius: inherit;
+      content: "";
+    }
+
+    .avatar {
+      display: grid;
+      width: 112px;
+      height: 112px;
+      margin-bottom: 1.4rem;
+      place-items: center;
+      color: #031615;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: 6px solid rgba(255, 255, 255, 0.07);
+      border-radius: 28px;
+      font-size: 2.4rem;
+      font-weight: 900;
+      letter-spacing: -0.08em;
+      transform: rotate(-3deg);
+    }
+
+    .availability {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 1rem;
+      color: #bcfff7;
+      font-size: 0.86rem;
+      font-weight: 750;
+    }
+
+    .availability::before {
+      width: 9px;
+      height: 9px;
+      background: var(--primary);
+      border-radius: 50%;
+      box-shadow: 0 0 0 6px rgba(86, 214, 201, 0.1);
+      content: "";
+    }
+
+    .quick-facts {
+      display: grid;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .quick-facts li {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 0.8rem;
+      align-items: start;
+      color: var(--muted);
+    }
+
+    .fact-icon {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      color: var(--primary);
+      background: var(--primary-dark);
+      border-radius: 9px;
+      font-size: 0.9rem;
+      font-weight: 900;
+    }
+
+    .quick-facts strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+
+    section {
+      padding: 6rem 0;
+    }
+
+    .section-heading {
+      max-width: 750px;
+      margin-bottom: 3rem;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 0.8rem;
+      font-size: clamp(2.1rem, 5vw, 3.4rem);
+      line-height: 1.1;
+      letter-spacing: -0.045em;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .about-copy {
+      padding: 2rem;
+    }
+
+    .about-copy p {
+      color: var(--muted);
+    }
+
+    .about-copy p + p {
+      margin-top: 1rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .stat {
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+    }
+
+    .stat strong {
+      color: var(--primary);
+      font-size: 2.3rem;
+      line-height: 1;
+    }
+
+    .stat span {
+      margin-top: 0.55rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .skill-group {
+      padding: 1.6rem;
+    }
+
+    .skill-group h3 {
+      margin-bottom: 1.1rem;
+      font-size: 1.05rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .tag {
+      padding: 0.45rem 0.72rem;
+      color: #c5d3e8;
+      background: rgba(126, 167, 255, 0.07);
+      border: 1px solid rgba(126, 167, 255, 0.15);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 750;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 1.2rem;
+      margin-left: 0.7rem;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: 4px;
+      width: 2px;
+      background: linear-gradient(var(--primary), rgba(126, 167, 255, 0.15));
+      content: "";
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 1.75rem;
+    }
+
+    .timeline-item::before {
+      position: absolute;
+      top: 2rem;
+      left: -2.35rem;
+      width: 12px;
+      height: 12px;
+      background: var(--primary);
+      border: 4px solid var(--background);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(86, 214, 201, 0.2);
+      content: "";
+    }
+
+    .timeline-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .timeline-meta h3 {
+      font-size: 1.25rem;
+    }
+
+    .date {
+      color: var(--primary);
+      font-size: 0.82rem;
+      font-weight: 850;
+    }
+
+    .company {
+      margin-bottom: 1rem;
+      color: var(--secondary);
+      font-weight: 750;
+    }
+
+    .timeline-item ul {
+      display: grid;
+      gap: 0.55rem;
+      padding-left: 1.2rem;
+      color: var(--muted);
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .project {
+      position: relative;
+      overflow: hidden;
+      padding: 1.75rem;
+    }
+
+    .project::after {
+      position: absolute;
+      top: -45px;
+      right: -45px;
+      width: 130px;
+      height: 130px;
+      background: rgba(86, 214, 201, 0.07);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .project-number {
+      display: inline-grid;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 1.2rem;
+      place-items: center;
+      color: var(--primary);
+      background: var(--primary-dark);
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 900;
+    }
+
+    .project h3 {
+      margin-bottom: 0.6rem;
+      font-size: 1.2rem;
+    }
+
+    .project p {
+      margin-bottom: 1rem;
+      color: var(--muted);
+    }
+
+    .education-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    .education-card h3 {
+      margin-bottom: 0.3rem;
+      font-size: 1.35rem;
+    }
+
+    .education-card p {
+      color: var(--muted);
+    }
+
+    .education-year {
+      flex: 0 0 auto;
+      color: var(--primary);
+      font-weight: 850;
+    }
+
+    .contact {
+      padding-bottom: 7rem;
+    }
+
+    .contact-box {
+      padding: clamp(2rem, 6vw, 4rem);
+      text-align: center;
+      background:
+        linear-gradient(145deg, rgba(86, 214, 201, 0.1), rgba(126, 167, 255, 0.07)),
+        var(--surface-solid);
+    }
+
+    .contact-box h2 {
+      max-width: 780px;
+      margin: 0 auto 1rem;
+      font-size: clamp(2.1rem, 5vw, 3.6rem);
+      line-height: 1.1;
+      letter-spacing: -0.05em;
+    }
+
+    .contact-box > p {
+      max-width: 670px;
+      margin: 0 auto 1.8rem;
+      color: var(--muted);
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+
+    footer {
+      padding: 1.7rem 0;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    :focus-visible {
+      outline: 3px solid rgba(86, 214, 201, 0.7);
+      outline-offset: 3px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 600ms ease, transform 600ms ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        gap: 2.5rem;
+      }
+
+      .hero-panel {
+        max-width: 600px;
+      }
+
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .menu-button {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        inset: 76px 1rem auto;
+        display: none;
+        padding: 1.2rem;
+        background: rgba(8, 17, 31, 0.98);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+      }
+
+      .nav-links.open {
+        display: grid;
+      }
+
+      .nav-links a {
+        display: block;
+        padding: 0.65rem;
+      }
+
+      .skills-grid,
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .education-card {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      section {
+        padding: 4.5rem 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions,
+      .hero-actions .button,
+      .contact-links,
+      .contact-links .button {
+        width: 100%;
+      }
+
+      .timeline {
+        margin-left: 0.25rem;
+        padding-left: 1.3rem;
+      }
+
+      .timeline-item::before {
+        left: -1.66rem;
+      }
+
+      .timeline-item {
+        padding: 1.35rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="site-header" id="site-header">
+    <nav class="navbar container" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="Junrel Dagohoy - Home">
+        <span class="brand-mark">JD</span>
+        <span>Junrel Dagohoy</span>
+      </a>
+
+      <button
+        class="menu-button"
+        id="menu-button"
+        type="button"
+        aria-label="Open navigation"
+        aria-expanded="false"
+        aria-controls="nav-links"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Expertise</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Project Domains</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" id="home">
+      <div class="hero-grid container">
+        <div>
+          <p class="eyebrow">Senior Backend Developer</p>
+
+          <h1>
+            Building reliable
+            <span class="gradient-text">backend systems.</span>
+          </h1>
+
+          <p class="hero-description">
+            I am Junrel Dagohoy, a backend developer with more than eight
+            years of experience creating APIs, banking integrations,
+            healthcare solutions, and enterprise applications using .NET,
+            C#, Azure, AWS, and SQL Server.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#experience">
+              View my experience
+            </a>
+
+            <a class="button button-secondary" href="mailto:junrel.dgy@gmail.com">
+              Send an email
+            </a>
+          </div>
+        </div>
+
+        <aside class="hero-panel" aria-label="Professional summary">
+          <div class="avatar" aria-hidden="true">JD</div>
+          <p class="availability">Based in Taguig City, Philippines</p>
+
+          <ul class="quick-facts">
+            <li>
+              <span class="fact-icon" aria-hidden="true">01</span>
+              <span>
+                <strong>Primary stack</strong>
+                .NET, C#, REST APIs and SQL Server
+              </span>
+            </li>
+
+            <li>
+              <span class="fact-icon" aria-hidden="true">02</span>
+              <span>
+                <strong>Cloud platforms</strong>
+                Microsoft Azure and AWS
+              </span>
+            </li>
+
+            <li>
+              <span class="fact-icon" aria-hidden="true">03</span>
+              <span>
+                <strong>Industry experience</strong>
+                Banking, healthcare, HR and education
+              </span>
+            </li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">About me</p>
+          <h2>Engineering systems that solve real operational problems.</h2>
+          <p>
+            My work spans implementation, integration, testing, deployment,
+            production support, technical documentation, and collaboration
+            with distributed teams.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <article class="card about-copy reveal">
+            <p>
+              I specialize in backend development for systems where
+              reliability and careful integration matter. My experience
+              includes digital banking, core banking integrations, payment
+              services, internet banking, API management, healthcare data,
+              payroll, remittance, HR, and university information systems.
+            </p>
+
+            <p>
+              Beyond coding, I contribute through technical design,
+              troubleshooting, code reviews, test support, deployment, and
+              post-implementation support. I value maintainable software,
+              clear communication, continuous learning, and practical
+              solutions that support both users and business goals.
+            </p>
+          </article>
+
+          <div class="stats">
+            <article class="card stat reveal">
+              <strong>8+</strong>
+              <span>Years in software development</span>
+            </article>
+
+            <article class="card stat reveal">
+              <strong>.NET 8</strong>
+              <span>Modern backend development</span>
+            </article>
+
+            <article class="card stat reveal">
+              <strong>Azure</strong>
+              <span>Cloud and DevOps experience</span>
+            </article>
+
+            <article class="card stat reveal">
+              <strong>FHIR</strong>
+              <span>Healthcare interoperability</span>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Technical expertise</p>
+          <h2>Backend, cloud and integration capabilities.</h2>
+          <p>
+            Technologies and practices used across enterprise banking,
+            healthcare, education and internal business systems.
+          </p>
+        </div>
+
+        <div class="skills-grid">
+          <article class="card skill-group reveal">
+            <h3>Backend development</h3>
+            <div class="tags">
+              <span class="tag">C#</span>
+              <span class="tag">.NET Core 5-8</span>
+              <span class="tag">ASP.NET</span>
+              <span class="tag">MVC</span>
+              <span class="tag">VB.NET</span>
+              <span class="tag">REST APIs</span>
+            </div>
+          </article>
+
+          <article class="card skill-group reveal">
+            <h3>Cloud and delivery</h3>
+            <div class="tags">
+              <span class="tag">Microsoft Azure</span>
+              <span class="tag">Azure DevOps</span>
+              <span class="tag">Azure Services</span>
+              <span class="tag">AWS</span>
+              <span class="tag">Git</span>
+              <span class="tag">CI/CD</span>
+            </div>
+          </article>
+
+          <article class="card skill-group reveal">
+            <h3>Data and integration</h3>
+            <div class="tags">
+              <span class="tag">SQL Server</span>
+              <span class="tag">FHIR</span>
+              <span class="tag">Kong API Management</span>
+              <span class="tag">PESONet</span>
+              <span class="tag">MT940</span>
+              <span class="tag">Core Banking</span>
+            </div>
+          </article>
+
+          <article class="card skill-group reveal">
+            <h3>Frontend foundations</h3>
+            <div class="tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">jQuery</span>
+              <span class="tag">Razor Views</span>
+              <span class="tag">Responsive UI</span>
+            </div>
+          </article>
+
+          <article class="card skill-group reveal">
+            <h3>Engineering practices</h3>
+            <div class="tags">
+              <span class="tag">Agile</span>
+              <span class="tag">Scrum</span>
+              <span class="tag">Code Reviews</span>
+              <span class="tag">Technical Design</span>
+              <span class="tag">SIT</span>
+              <span class="tag">UAT</span>
+            </div>
+          </article>
+
+          <article class="card skill-group reveal">
+            <h3>Production support</h3>
+            <div class="tags">
+              <span class="tag">Level 3 Support</span>
+              <span class="tag">Troubleshooting</span>
+              <span class="tag">Deployment</span>
+              <span class="tag">Performance</span>
+              <span class="tag">Bug Analysis</span>
+              <span class="tag">Documentation</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Career history</p>
+          <h2>Professional experience.</h2>
+          <p>
+            A progression from enterprise application development to
+            cloud-based banking and healthcare platforms.
+          </p>
+        </div>
+
+        <div class="timeline">
+          <article class="card timeline-item reveal">
+            <div class="timeline-meta">
+              <h3>Senior Backend Developer</h3>
+              <span class="date">January 2025 - Present</span>
+            </div>
+
+            <p class="company">Socium | IBM</p>
+
+            <ul>
+              <li>
+                Support a Singapore healthcare solution using .NET 8, C#,
+                Azure, AWS, SQL Server and FHIR.
+              </li>
+              <li>
+                Completed focused training in Azure DevOps, Azure Services
+                and healthcare interoperability standards.
+              </li>
+              <li>
+                Collaborate with a Singapore-based team to align technical
+                requirements, workflows and delivery practices.
+              </li>
+              <li>
+                Investigate and resolve complex Level 3 support issues in
+                Azure and FHIR implementations.
+              </li>
+            </ul>
+          </article>
+
+          <article class="card timeline-item reveal">
+            <div class="timeline-meta">
+              <h3>Backend Developer</h3>
+              <span class="date">July 2023 - December 2024</span>
+            </div>
+
+            <p class="company">IT Managers Inc. - KOMO Digital Banking</p>
+
+            <ul>
+              <li>
+                Contributed to backend services and module integrations for
+                a digital banking application.
+              </li>
+              <li>
+                Delivered sprint features using .NET 6, C#, APIs, Azure,
+                SQL Server, DevOps and Git.
+              </li>
+              <li>
+                Helped improve application performance, reliability and
+                scalability.
+              </li>
+              <li>
+                Participated in code reviews and knowledge sharing to
+                strengthen code quality.
+              </li>
+            </ul>
+          </article>
+
+          <article class="card timeline-item reveal">
+            <div class="timeline-meta">
+              <h3>System Analyst / Programmer - Junior Assistant Manager</h3>
+              <span class="date">November 2021 - June 2023</span>
+            </div>
+
+            <p class="company">CTBC Bank (Philippines) Corp.</p>
+
+            <ul>
+              <li>
+                Built and supported backend systems, PESONet APIs, internet
+                banking services, document monitoring and MT940 processing.
+              </li>
+              <li>
+                Integrated API management through Kong and connected
+                applications to core banking services.
+              </li>
+              <li>
+                Converted business requirements into functional .NET and C#
+                applications with technical design documentation.
+              </li>
+              <li>
+                Supported SIT, UAT, production deployment and
+                post-implementation issue resolution.
+              </li>
+              <li>
+                Led third-party integration with the bank's API services.
+              </li>
+            </ul>
+          </article>
+
+          <article class="card timeline-item reveal">
+            <div class="timeline-meta">
+              <h3>Analyst Programmer</h3>
+              <span class="date">September 2020 - October 2021</span>
+            </div>
+
+            <p class="company">H2 Software Consulting Services Inc.</p>
+
+            <ul>
+              <li>
+                Developed payroll and remittance system features with C# and
+                MVC.
+              </li>
+              <li>
+                Delivered a CTBC Bank project assignment from January to
+                October 2021.
+              </li>
+              <li>
+                Improved an existing backend process and developed internal
+                applications to streamline operations.
+              </li>
+              <li>
+                Produced test cases, supported SIT and collaborated with QA
+                to diagnose defects and integration issues.
+              </li>
+              <li>
+                Worked with ASP.NET, MVC, jQuery, databases and API
+                connections in a Scrum environment.
+              </li>
+            </ul>
+          </article>
+
+          <article class="card timeline-item reveal">
+            <div class="timeline-meta">
+              <h3>System Programmer</h3>
+              <span class="date">May 2017 - September 2020</span>
+            </div>
+
+            <p class="company">Wizzard Technologies Inc.</p>
+
+            <ul>
+              <li>
+                Developed university information and human resources systems
+                using VB.NET.
+              </li>
+              <li>
+                Delivered applications for government and private-sector
+                clients.
+              </li>
+              <li>
+                Supported client testing, training, issue resolution and
+                system implementation.
+              </li>
+              <li>
+                Prepared implementation plans and integrated applications
+                into client environments.
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Project domains</p>
+          <h2>Systems and industries I have worked with.</h2>
+          <p>
+            Client and employer confidentiality is respected, so these
+            summaries focus on responsibilities and technology domains.
+          </p>
+        </div>
+
+        <div class="project-grid">
+          <article class="card project reveal">
+            <span class="project-number">01</span>
+            <h3>Digital Banking Platform</h3>
+            <p>
+              Backend services and integrations supporting a digital bank,
+              with an emphasis on reliable API behavior, performance,
+              scalability and sprint-based delivery.
+            </p>
+            <div class="tags">
+              <span class="tag">.NET 6</span>
+              <span class="tag">C#</span>
+              <span class="tag">Azure</span>
+              <span class="tag">SQL Server</span>
+            </div>
+          </article>
+
+          <article class="card project reveal">
+            <span class="project-number">02</span>
+            <h3>Singapore Healthcare System</h3>
+            <p>
+              Cloud-based healthcare platform support involving FHIR data
+              standards, Azure environments, AWS, cross-border
+              collaboration and complex technical investigation.
+            </p>
+            <div class="tags">
+              <span class="tag">.NET 8</span>
+              <span class="tag">FHIR</span>
+              <span class="tag">Azure</span>
+              <span class="tag">AWS</span>
+            </div>
+          </article>
+
+          <article class="card project reveal">
+            <span class="project-number">03</span>
+            <h3>Banking APIs and Integrations</h3>
+            <p>
+              Development and support for PESONet, internet banking, MT940,
+              API management, core banking connections and external service
+              integrations.
+            </p>
+            <div class="tags">
+              <span class="tag">REST APIs</span>
+              <span class="tag">Kong</span>
+              <span class="tag">PESONet</span>
+              <span class="tag">MT940</span>
+            </div>
+          </article>
+
+          <article class="card project reveal">
+            <span class="project-number">04</span>
+            <h3>Enterprise Information Systems</h3>
+            <p>
+              Business applications for payroll, remittance, human
+              resources, university operations and document monitoring,
+              including implementation and client training.
+            </p>
+            <div class="tags">
+              <span class="tag">C# MVC</span>
+              <span class="tag">VB.NET</span>
+              <span class="tag">jQuery</span>
+              <span class="tag">SQL</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Education</p>
+          <h2>Academic background.</h2>
+        </div>
+
+        <article class="card education-card reveal">
+          <div>
+            <h3>Bachelor of Science in Computer Science</h3>
+            <p>Saint Joseph College</p>
+          </div>
+          <span class="education-year">2013 - 2017</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="card contact-box reveal">
+          <p class="eyebrow">Get in touch</p>
+          <h2>Need an experienced .NET backend developer?</h2>
+          <p>
+            I am interested in opportunities involving backend engineering,
+            cloud services, enterprise APIs, banking integrations and
+            healthcare platforms.
+          </p>
+
+          <div class="contact-links">
+            <a class="button button-primary" href="mailto:junrel.dgy@gmail.com">
+              junrel.dgy@gmail.com
+            </a>
+
+            <a class="button button-secondary" href="tel:+639763022377">
+              +63 976 302 2377
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>
+        &copy; <span id="current-year"></span> Junrel Dagohoy. Built with
+        HTML, CSS and JavaScript.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.getElementById("site-header");
+    const menuButton = document.getElementById("menu-button");
+    const navLinks = document.getElementById("nav-links");
+    const year = document.getElementById("current-year");
+
+    year.textContent = new Date().getFullYear();
+
+    function updateHeader() {
+      header.classList.toggle("scrolled", window.scrollY > 20);
+    }
+
+    function closeMenu() {
+      navLinks.classList.remove("open");
+      document.body.classList.remove("menu-open");
+      menuButton.setAttribute("aria-expanded", "false");
+      menuButton.setAttribute("aria-label", "Open navigation");
+    }
+
+    menuButton.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      document.body.classList.toggle("menu-open", isOpen);
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation" : "Open navigation"
+      );
+    });
+
+    document.querySelectorAll(".nav-links a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    updateHeader();
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      document.querySelectorAll(".reveal").forEach((element) => {
+        element.classList.add("visible");
+      });
+    } else {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      document.querySelectorAll(".reveal").forEach((element) => {
+        observer.observe(element);
+      });
+    }
+  </script>
+</body>
+</html>
